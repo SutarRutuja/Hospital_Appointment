@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Dashboard - ENT Clinic</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .department-card, .doctor-card {
+            cursor: pointer;
+            text-align: center;
+        }
+        .department-card.selected, .doctor-card.selected {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px var(--primary-color);
+        }
+        .slot-btn {
+            background: #f1f5f9;
+            border: 1px solid var(--border-color);
+            padding: 0.5rem;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+        }
+        .slot-btn:hover {
+            background: #e2e8f0;
+        }
+        .slot-btn.selected {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container nav-content">
+            <a href="#" class="brand">ENT Clinic</a>
+            <div class="d-flex align-center gap-4">
+                <span id="user-name" style="font-weight: 500;">Hello, User</span>
+                <button class="btn btn-outline" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container dashboard-grid">
+        <!-- Sidebar Menu -->
+        <div class="card" style="height: fit-content;">
+            <h3 class="mb-4">Menu</h3>
+            <div class="grid" style="gap: 1rem;">
+                <button class="btn btn-primary btn-block text-center" onclick="showSection('book-appointment')">Book Appointment</button>
+                <button class="btn btn-outline btn-block text-center" onclick="showSection('medical-history')">Medical History</button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div>
+            <!-- Book Appointment Section -->
+            <div id="book-appointment" class="section">
+                <h2 class="mb-4">Book an Appointment</h2>
+                
+                <!-- Step 1: Select Department -->
+                <div id="step-1" class="card mb-4">
+                    <h3 class="mb-4">1. Select Department</h3>
+                    <div id="departments-list" class="grid grid-cols-2"></div>
+                </div>
+
+                <!-- Step 2: Select Doctor -->
+                <div id="step-2" class="card mb-4 hidden">
+                    <h3 class="mb-4">2. Select Doctor</h3>
+                    <div id="doctors-list" class="grid grid-cols-2"></div>
+                </div>
+
+                <!-- Step 3: Select Slot -->
+                <div id="step-3" class="card hidden">
+                    <h3 class="mb-4">3. Select Date & Time</h3>
+                    <div class="form-group">
+                        <label>Date</label>
+                        <input type="date" id="appointment-date" class="form-control" onchange="fetchSlots()">
+                    </div>
+                    <div id="slots-list" class="grid grid-cols-3 mt-4"></div>
+                    <button class="btn btn-primary btn-block mt-4 hidden" id="book-btn" onclick="submitBooking()">Confirm Booking</button>
+                </div>
+            </div>
+
+            <!-- Medical History Section -->
+            <div id="medical-history" class="section hidden">
+                <h2 class="mb-4">Past Appointments & Records</h2>
+                <div id="history-list" class="grid grid-cols-1"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/api.js"></script>
+    <script src="../js/patient.js"></script>
+</body>
+</html>

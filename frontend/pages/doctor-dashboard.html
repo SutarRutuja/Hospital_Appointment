@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Dashboard - ENT Clinic</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container nav-content">
+            <a href="#" class="brand">ENT Clinic - Doctor Portal</a>
+            <div class="d-flex align-center gap-4">
+                <span id="user-name" style="font-weight: 500;">Hello, Dr.</span>
+                <button class="btn btn-outline" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="d-flex justify-between align-center mb-4">
+            <h2>Appointments</h2>
+            <div class="form-group mb-0">
+                <input type="date" id="filter-date" class="form-control" onchange="loadAppointments()">
+            </div>
+        </div>
+
+        <div id="appointments-list" class="grid grid-cols-1"></div>
+    </div>
+
+    <!-- Medical Record Modal -->
+    <div id="record-modal" class="hidden" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; display: flex; align-items: center; justify-content: center;">
+        <div class="card" style="width: 100%; max-width: 600px;">
+            <h3 class="mb-4">Complete Consultation</h3>
+            <form id="record-form" onsubmit="submitRecord(event)">
+                <input type="hidden" id="rec-app-id">
+                <input type="hidden" id="rec-pat-id">
+                
+                <div class="form-group">
+                    <label>Diagnosis</label>
+                    <textarea id="rec-diagnosis" class="form-control" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Prescription</label>
+                    <textarea id="rec-prescription" class="form-control" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Doctor Notes / Instructions</label>
+                    <textarea id="rec-notes" class="form-control" rows="3"></textarea>
+                </div>
+                <div class="d-flex justify-between mt-4">
+                    <button type="button" class="btn btn-outline" onclick="closeModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save & Mark Completed</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../js/api.js"></script>
+    <script src="../js/doctor.js"></script>
+    <style>
+        .hidden { display: none !important; }
+    </style>
+</body>
+</html>
