@@ -29,17 +29,8 @@ A complete hospital appointment system designed for a specialty ENT clinic.
    ```
    *You should see `Server running on port 5000` and `MongoDB connected`*.
 
-### 3. Seed Database (Optional but Recommended)
-To quickly test without manual data entry, use curl or Postman to trigger the seed script:
-```bash
-curl -X POST http://localhost:5000/api/seed/init
-```
-*This handles adding departments and Dummy Doctors, as well as the initial Admin.*
 
-- **Admin Account**: `admin@entclinic.com` / `admin123`
-- **Doctor Accounts**: `john.smith@entclinic.com` / `doctor123`, `sarah.connor@entclinic.com` / `doctor123`
-
-### 4. Run Frontend
+### 3. Run Frontend
 The frontend does not require a build step. You can simply serve it via a static file server like `Live Server` in VS Code or `http-server`:
 1. Navigate to the `frontend` folder.
 2. Run `npx http-server` or simply open `frontend/index.html` in your web browser.
