@@ -28,6 +28,15 @@ const getDailyAppointments = async (req, res) => {
             },
             { $unwind: { path: '$patient', preserveNullAndEmptyArrays: true } },
             { $project: { 'patient.password': 0 } },
+            {
+                $lookup: {
+                    from: 'medical_records',
+                    localField: '_id',
+                    foreignField: 'appointmentId',
+                    as: 'medicalRecord'
+                }
+            },
+            { $unwind: { path: '$medicalRecord', preserveNullAndEmptyArrays: true } },
             { $sort: { timeSlot: 1 } }
         ]).toArray();
 

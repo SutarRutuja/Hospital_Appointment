@@ -57,6 +57,31 @@
         </div>
     </div>
 
+    <!-- View Record Modal -->
+    <div id="view-record-modal" class="hidden" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; display: flex; align-items: center; justify-content: center;">
+        <div class="card" style="width: 100%; max-width: 600px;">
+            <div class="d-flex justify-between align-center mb-4">
+                <h3>Medical Record</h3>
+                <button class="btn btn-outline" onclick="closeViewModal()" style="padding: 0.25rem 0.5rem;">&times;</button>
+            </div>
+            <div class="form-group">
+                <label>Diagnosis</label>
+                <div id="view-diagnosis" class="form-control" style="background-color: var(--bg-light); min-height: 60px;"></div>
+            </div>
+            <div class="form-group">
+                <label>Prescription</label>
+                <div id="view-prescription" class="form-control" style="background-color: var(--bg-light); min-height: 60px;"></div>
+            </div>
+            <div class="form-group">
+                <label>Doctor Notes / Instructions</label>
+                <div id="view-notes" class="form-control" style="background-color: var(--bg-light); min-height: 60px;"></div>
+            </div>
+            <div class="d-flex justify-end mt-4">
+                <button type="button" class="btn btn-primary" onclick="closeViewModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
     <script src="../js/api.js"></script>
     <script src="../js/doctor.js"></script>
     <style>

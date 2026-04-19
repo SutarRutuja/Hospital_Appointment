@@ -5,6 +5,8 @@ document.getElementById('user-name').textContent = `Hello, ${user.name}`;
 const today = new Date().toISOString().split('T')[0];
 document.getElementById('filter-date').value = today;
 
+let appointmentsData = {};
+
 async function loadAppointments() {
     const date = document.getElementById('filter-date').value;
     try {
@@ -16,11 +18,20 @@ async function loadAppointments() {
             return;
         }
 
+        appointmentsData = {};
+
         container.innerHTML = res.appointments.map(app => {
+            appointmentsData[app._id] = app;
             let badgeClass = app.status === 'completed' ? 'badge-success' : app.status === 'scheduled' ? 'badge-warning' : 'badge-danger';
-            let actionBtn = app.status === 'scheduled' 
-                ? `<button class="btn btn-primary" onclick="openModal('${app._id}', '${app.patientId}')">Add Medical Record</button>`
-                : `<span class="text-muted">Record Added</span>`;
+            
+            let actionBtn = '';
+            if (app.status === 'scheduled') {
+                actionBtn = `<button class="btn btn-primary" onclick="openModal('${app._id}', '${app.patientId}')">Add Medical Record</button>`;
+            } else if (app.status === 'completed' && app.medicalRecord) {
+                actionBtn = `<button class="btn btn-outline" onclick="openViewModal('${app._id}')">View Record</button>`;
+            } else {
+                actionBtn = `<span class="text-muted">Record Added</span>`;
+            }
 
             return `
                 <div class="card mb-4" style="display: flex; justify-content: space-between; align-items: center;">
@@ -51,6 +62,20 @@ function openModal(appId, patId) {
 function closeModal() {
     document.getElementById('record-modal').classList.add('hidden');
     document.getElementById('record-form').reset();
+}
+
+function openViewModal(appId) {
+    const app = appointmentsData[appId];
+    if (app && app.medicalRecord) {
+        document.getElementById('view-diagnosis').innerText = app.medicalRecord.diagnosis || 'N/A';
+        document.getElementById('view-prescription').innerText = app.medicalRecord.prescription || 'N/A';
+        document.getElementById('view-notes').innerText = app.medicalRecord.doctorNotes || 'N/A';
+        document.getElementById('view-record-modal').classList.remove('hidden');
+    }
+}
+
+function closeViewModal() {
+    document.getElementById('view-record-modal').classList.add('hidden');
 }
 
 async function submitRecord(e) {
